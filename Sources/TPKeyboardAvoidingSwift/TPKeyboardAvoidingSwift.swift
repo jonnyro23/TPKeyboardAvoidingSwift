@@ -314,7 +314,7 @@ extension UIScrollView {
 		
 		let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Float ?? 0.0
 		let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int ?? 0
-		let options = UIView.AnimationOptions(rawValue: UInt(curve))
+		let options = [UIView.AnimationOptions(rawValue: UInt(curve)), .layoutSubviews, .beginFromCurrentState]
 		
 		UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: options, animations: { [weak self] in
 			guard let self = self else { return }
