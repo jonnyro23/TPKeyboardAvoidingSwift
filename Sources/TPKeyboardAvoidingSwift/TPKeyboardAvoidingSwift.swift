@@ -315,7 +315,7 @@ extension UIScrollView {
 		let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Float ?? 0.0
 		let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int ?? 0
 		
-		UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: [UIView.AnimationOptions(rawValue: UInt(curve)), .layoutSubviews, .beginFromCurrentState], animations: { [weak self] in
+		UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: [.allowUserInteraction, .layoutSubviews, .beginFromCurrentState], animations: { [weak self] in
 			guard let self = self else { return }
 			
 			self.contentInset = self.TPKeyboardAvoiding_contentInsetForKeyboard()
