@@ -324,7 +324,7 @@ extension UIScrollView {
 			self.setContentOffset(point, animated: false)
 			
 			self.scrollIndicatorInsets = self.contentInset
-			self.layoutIfNeeded()
+// 			self.layoutIfNeeded()
 		})
 	}
 	
