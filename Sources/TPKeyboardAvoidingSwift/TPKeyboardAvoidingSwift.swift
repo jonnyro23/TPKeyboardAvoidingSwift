@@ -315,7 +315,7 @@ extension UIScrollView {
 		let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Float ?? 0.0
 		let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int ?? 0
 		
-		UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: [.allowUserInteraction, .layoutSubviews, .beginFromCurrentState], animations: { [weak self] in
+        UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: [UIView.AnimationOptions(rawValue: UInt(curve)), .allowUserInteraction, .layoutSubviews, .beginFromCurrentState], animations: { [weak self] in
 			guard let self = self else { return }
 			
 			self.contentInset = self.TPKeyboardAvoiding_contentInsetForKeyboard()
@@ -324,8 +324,10 @@ extension UIScrollView {
 			self.setContentOffset(point, animated: false)
 			
 			self.scrollIndicatorInsets = self.contentInset
-// 			self.layoutIfNeeded()
-		})
+            
+            }, completion: { completed in
+            self.layoutIfNeeded()
+        })
 	}
 	
 	@objc func TPKeyboardAvoiding_keyboardWillHide(_ notification: Notification) {
@@ -342,17 +344,17 @@ extension UIScrollView {
 		
 		let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Float ?? 0.0
 		let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int ?? 0
-		let options = UIView.AnimationOptions(rawValue: UInt(curve))
 		
-		UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: options, animations: { [weak self] in
+		UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: [UIView.AnimationOptions(rawValue: UInt(curve)), .allowUserInteraction, .layoutSubviews, .beginFromCurrentState], animations: { [weak self] in
 			guard let self = self, self is TPKeyboardAvoidingScrollView else { return }
 			
 			self.contentSize = state.priorContentSize
 			self.contentInset = state.priorInset
 			self.scrollIndicatorInsets = state.priorScrollIndicatorInsets
 			self.isPagingEnabled = state.priorPagingEnabled
-			self.layoutIfNeeded()
-		})
+		}, completion: { completed in
+            self.layoutIfNeeded()
+        })
 	}
 	
 	func TPKeyboardAvoiding_updateFromContentSizeChange() {
